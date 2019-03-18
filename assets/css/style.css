@@ -1,0 +1,19 @@
+body{
+    color:white;
+}
+
+.jumbotron {
+    background-color: #777777;
+}
+
+#concert-info{
+    height: 500px;
+    background-color: #777777;
+    padding: 225px 0;
+}
+
+#merch-info{
+    height: 500px;
+    background-color: #333333;
+    padding: 225px 0;
+}
