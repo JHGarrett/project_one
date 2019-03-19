@@ -1,7 +1,7 @@
 body {
   padding: 0;
   margin: 0;
-  background: #333;
+  background: rgb(83, 15, 15);
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -12,8 +12,8 @@ body {
 #midBox,
 #rightBox{
   display:block;
-  width:300px;
-  height:400px;
+  width:500px;
+  height:700px;
   margin:10px;
   float:left;
   position:relative;
@@ -22,7 +22,7 @@ body {
   box-shadow:0px 0px 35px 5px rgba(0, 0, 0, 0.72);
 }
 
-#leftBox::before,
+/* #leftBox::before,
 #midBox::before,
 #rightBox::before {
   content:"";
@@ -36,7 +36,7 @@ body {
   top: 0;
   left: 0;
   transition: .5s;
-}
+} */
 #leftBox:hover::before,
 #midBox:hover::before,
 #rightBox:hover::before{
@@ -59,4 +59,22 @@ body {
   background-image: url(assets/images/concert3.jpg);
   background-position: center;
   background-size: cover;
+}
+
+
+
+select {
+  background-color: #eee;
+  font-size: 108%;
+  width: 300px;
+  height: 36px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.form-group {
+  position: absolute;
+  bottom: 80%;
 }
