@@ -5,7 +5,9 @@
     var globalEvent;
 
     
-    $("#submitButton").on("click", function(event){
+    $(".submitButton").on("click", function(event){
+
+
         event.preventDefault();
 
         if($("#cityInput").val() === "" && $("#bandInput").val() === ""){
@@ -92,6 +94,8 @@
 
                                 localStorage.setItem("result", JSON.stringify(eventResults));
 
+                                
+
                                 //If old search results exist, then remove them
                                 // if($("#results").children().length >= 1){
                             
@@ -158,6 +162,7 @@
 
                     //Storing result
                     localStorage.setItem("result", JSON.stringify(eventResults));
+
                     //If old search results exist, then remove
                     // if($("#results").children().length >= 1){
 
@@ -187,25 +192,10 @@
 
 
                     })
-                }
-
-
-
-
-
-
-
-
-
-
-
-            
+                }       
             
         }
-        
-
-
-
-     
-
     })
+
+
+
