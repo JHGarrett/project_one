@@ -2,7 +2,7 @@
     var bandName = "";
     var apiKey = "fEMnsQXTSSaQ9FF0";
     var doneGettingLocation = false;
-    var e;
+    var globalEvent;
 
     
     $("#submitButton").on("click", function(event){
@@ -78,42 +78,46 @@
                     
                             }).then(function(data){
                             console.log(data)
-                            e = data;
+                            globalEvent = data;
                             var eventResults = data.resultsPage.results.event;
     
-                            //no query has been found after searching by city
+                            //If no query has been found after searching by city
                             if((data === undefined) || (eventResults === undefined)){
                                 console.log("No events found");
                                 alert("No events found");
                             }
+
+                            //Results have been found from city search
                             else{
 
+                                localStorage.setItem("result", JSON.stringify(eventResults));
+
                                 //If old search results exist, then remove them
-                                if($("#results").children().length >= 1){
+                                // if($("#results").children().length >= 1){
                             
-                                    $("#results").children().remove();
-                                }
+                                //     $("#results").children().remove();
+                                // }
 
                                 //Adding new search results in the results div
-                                $("#results").prepend($("<h4> Search Results </h4>").css("color", "black"))
-                                console.log(eventResults);
-                                for(var x = 0; x < eventResults.length; x++){
-                                    console.log(x)
-                                    var row = $("<div class=\"row\">");
-                                    var col = $("<div class=\"col-md-6\">")
-                                    var card = $("<div class=\"card\">");
-                                    var cardBody = $("<div class=\"card-body\">");
-                                    var artistPerforming = ""
-                                    for (var y = 0; y < eventResults[x].performance.length; y++){
-                                        artistPerforming += (eventResults[x].performance[y].displayName + " ")
+                                // $("#results").prepend($("<h4> Search Results </h4>").css("color", "black"))
+                                // console.log(eventResults);
+                                // for(var x = 0; x < eventResults.length; x++){
+                                //     console.log(x)
+                                //     var row = $("<div class=\"row\">");
+                                //     var col = $("<div class=\"col-md-6\">")
+                                //     var card = $("<div class=\"card\">");
+                                //     var cardBody = $("<div class=\"card-body\">");
+                                //     var artistPerforming = ""
+                                //     for (var y = 0; y < eventResults[x].performance.length; y++){
+                                //         artistPerforming += (eventResults[x].performance[y].displayName + " ")
     
-                                    }
-                                    console.log(eventResults[0].start.date)
-                                    cardBody.prepend($("<p class=\"card-text\"> Playing on " + eventResults[x].start.date +" at " + eventResults[x].venue.displayName + "</p>").css("color", "black"))
-                                    cardBody.prepend($("<p class=\"card-text\">"+artistPerforming+"<p>").css("color", "black"))
-                                    cardBody.prepend($("<h5 class=\"card-title\">"+eventResults[x].displayName+"</h5>").css("color", "black"))
-                                    $("#results").append(row.append(col.append(card.append(cardBody))))    
-                                }
+                                //     }
+                                //     console.log(eventResults[0].start.date)
+                                //     cardBody.prepend($("<p class=\"card-text\"> Playing on " + eventResults[x].start.date +" at " + eventResults[x].venue.displayName + "</p>").css("color", "black"))
+                                //     cardBody.prepend($("<p class=\"card-text\">"+artistPerforming+"<p>").css("color", "black"))
+                                //     cardBody.prepend($("<h5 class=\"card-title\">"+eventResults[x].displayName+"</h5>").css("color", "black"))
+                                //     $("#results").append(row.append(col.append(card.append(cardBody))))    
+                                // }
                             }
                             
                     
@@ -133,7 +137,7 @@
 
                 })
             
-            //When user searches by band
+            //When user searches by band only
             }else if($("#bandInput").val() !== ""){
 
                 var queryEventURL = "https://api.songkick.com/api/3.0/events.json?apikey="+apiKey+"&artist_name="+$("#bandInput").val()+"&per_page=5";
@@ -142,40 +146,43 @@
                     url: queryEventURL,
                     method: "GET"
                 }).then(function(data){
-                    e = data;
+                    globalEvent = data;
                     var eventResults = data.resultsPage.results.event;
                     //If no query is found. Reasons - user has misspelled name of artist
                 if((data === undefined) || (eventResults === undefined)){
                         alert("No events found");
                     console.log("no events found")
                 }
-                //Else, printing results
+                //Else, storing results and printing results
                 else{
-                    //If old search results exist, then remove
-                    if($("#results").children().length >= 1){
 
-                        $("#results").children().remove();
-                    }
+                    //Storing result
+                    localStorage.setItem("result", JSON.stringify(eventResults));
+                    //If old search results exist, then remove
+                    // if($("#results").children().length >= 1){
+
+                    //     $("#results").children().remove();
+                    // }
                     //Adding new search results
-                    $("#results").prepend($("<h4> Search Results </h4>").css("color", "black"))
-                    console.log(eventResults);
-                    for(var x = 0; x < eventResults.length; x++){
-                        console.log(x)
-                        var row = $("<div class=\"row\">");
-                        var col = $("<div class=\"col-md-6\">")
-                        var card = $("<div class=\"card\">");
-                        var cardBody = $("<div class=\"card-body\">");
-                        var artistPerforming = ""
-                        for (var y = 0; y < eventResults[x].performance.length; y++){
-                            artistPerforming += (eventResults[x].performance[y].displayName + " ")
-                        }
-                        console.log(eventResults[0].start.date)
-                        cardBody.prepend($("<p class=\"card-text\"> Playing on " + eventResults[x].start.date +" at " + eventResults[x].venue.displayName + "</p>").css("color", "black"))
-                        cardBody.prepend($("<p class=\"card-text\">"+artistPerforming+"<p>").css("color", "black"))
-                        cardBody.prepend($("<h5 class=\"card-title\">"+eventResults[x].displayName+"</h5>").css("color", "black"))
-                        $("#results").append(row.append(col.append(card.append(cardBody))))
+                    // $("#results").prepend($("<h4> Search Results </h4>").css("color", "black"))
+                    // console.log(eventResults);
+                    // for(var x = 0; x < eventResults.length; x++){
+                    //     console.log(x)
+                    //     var row = $("<div class=\"row\">");
+                    //     var col = $("<div class=\"col-md-6\">")
+                    //     var card = $("<div class=\"card\">");
+                    //     var cardBody = $("<div class=\"card-body\">");
+                    //     var artistPerforming = ""
+                    //     for (var y = 0; y < eventResults[x].performance.length; y++){
+                    //         artistPerforming += (eventResults[x].performance[y].displayName + " ")
+                    //     }
+                    //     console.log(eventResults[0].start.date)
+                    //     cardBody.prepend($("<p class=\"card-text\"> Playing on " + eventResults[x].start.date +" at " + eventResults[x].venue.displayName + "</p>").css("color", "black"))
+                    //     cardBody.prepend($("<p class=\"card-text\">"+artistPerforming+"<p>").css("color", "black"))
+                    //     cardBody.prepend($("<h5 class=\"card-title\">"+eventResults[x].displayName+"</h5>").css("color", "black"))
+                    //     $("#results").append(row.append(col.append(card.append(cardBody))))
                         
-                    }
+                    // }
                 }
 
 
