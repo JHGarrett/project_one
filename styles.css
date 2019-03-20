@@ -1,135 +1,134 @@
-body {
-  padding: 0;
+*{
   margin: 0;
-  background: rgba(134, 22, 22, 0.829);
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Verdana;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  position: relative;
+  background-color: aqua;
+  background:url(assets/images/concert5.jpg);
+  font-family: arial;
 }
-#leftBox,
-#midBox,
-#rightBox{
-  display:block;
-  width:500px;
-  height:700px;
-  margin:10px;
-  float:left;
-  position:relative;
-  padding:5px;
-  overflow:hidden;
-  box-shadow:0px 0px 40px 15px rgba(0, 0, 0, 0.87);
+.container{
+  min-width: 1000px;
+  min-height: 600px;
+  border-radius: 20px;
+  position: relative;
+  transition: 1.5s ease-in-out;
+  transform-style: preserve-3d;
+  /* box-shadow:0px 0px 40px 15px rgba(0, 0, 0, 0.87); */
+           /* -10px -10px -60px #000; */
 }
-
-/* #leftBox::before,
-#midBox::before,
-#rightBox::before {
-  content:"";
-  background-size: cover;
-  color: #fff;
-  opacity: 0;
+.side{
+  position: absolute;
+  text-align: center;
   width: 100%;
   height: 100%;
-  background: rgba(156, 76, 0, 0.85);
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: .5s;
-} */
-#leftBox:hover::before,
-#midBox:hover::before,
-#rightBox:hover::before{
-  opacity:100;
-  transition:.5s;
-}
-
-
-#leftBox {
-  background-image: url(assets/images/concert1.jpg);
-  background-position: center;
-  background-size: cover;
-}
-#midBox {
-  background-image: url(assets/images/concert2.jpg);
-  background-position: center;
-  background-size: cover;
-}
-#rightBox {
-  background-image: url(assets/images/concert3.jpg);
-  background-position: center;
-  background-size: cover;
-}
-
-
-
-select {
-  background-color: #eee;
-  font-size: 100%;
-  width: 600px;
-  height: 36px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  /* -moz-border-radius: 6px; */
-  /* border-radius: 6px; */
-}
-
-/* .form-group {
-  position: absolute;
-  bottom: 81%;
-  right: 270px
-} */
-
-a{
-  position: absolute;
-  top: 20%;
-  left: 20%;
-  transform: translate(-50%,-50%);
-  padding: 20px 35px;
-  text-transform: uppercase;
-  text-decoration: none;
+  padding-right: 20px 50px;
   color: #fff;
-  letter-spacing: 2px;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  border-radius: 20px;
+}
+.content{
+  transform: translateZ(70px) scale(0.8);
+  line-height: 1.5em;
+}
+.content h1{
+  position: relative;
   font-size: 20px;
+  font-family: arial;
 }
-a:before{
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
+.front{
+  z-index: 2;
+  background: url(assets/images/concert2.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
   width: 100%;
   height: 100%;
-  background-color: #03a9f4;
-  z-index: -1;
-  transition: transform 0.5s;
-  transform-origin: bottom right;
-  transform: scale(0);
+  box-shadow:0px 0px 50px 20px rgba(0, 0, 0, 0.87);
 }
-a:hover:before{
-  transition: transform 0.5s;
-  transform-origin:top left;
-  transform: scale(1);
+.front h1{
+  color: teal;
+  font-size: 60px;
+  text-shadow: 3px 4px 10px #000;
+
 }
-a:after{
+.back{
+  background-color: #333;
+  transform: rotateY(180deg);
+  z-index: 0;
+  padding-top: 10px;
+  background-image: url(assets/images/concert1.jpg);
+  background-size: cover;
+  box-shadow:0px 0px 50px 20px rgba(0, 0, 0, 0.87);
+
+  
+}
+.container:hover{
+  transform: rotateY(-180deg);
+}
+.back h1{
+  color: teal;
+  font-size: 60px;
+  margin: 0;
+  text-shadow: 3px 4px 10px #000;
+}
+.back p{
+  font-size: 20px;
+  margin: 0;
+  text-shadow: 3px 4px 10px #000;
+  text-decoration: teal;
+}
+form label, form input{
+  display: block;
+}
+form input, form textarea{
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid #fff;
+  padding: 5px;
+  width: 100%;
+  color: teal;
+  outline: none;
+}
+form label{
+  color: #fff;
+  font-size: 40px;
+  margin-left: 15px 0;
+  text-shadow: 3px 4px 10px #000;
+
+}
+form input[type="submit"]{
+  display: block;
+  width: auto;
+  margin: 10px auto;
+  padding: 5px 10px;
+  border: 3px solid #fff;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  text-shadow: 3px 4px 10px #000;
+
+}
+.back .content h1:before{
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-  border:2px solid #fff;
-  z-index: -1;
-  box-sizing: border-box;
-  transition: transform 0.5s;
-  transform-origin: top left;
-  transform: scale(1);
-}
-a:hover:after{
-  transition: transform 0.5s;
-  transform-origin: bottom right;
-  transform: scale(0);
+  bottom: -30px;
+  height: 3px;
+  background-color: white;
+  width: 70px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-/* ================== */
 
+
+/*# sourceMappingURL=styles.css.map */
