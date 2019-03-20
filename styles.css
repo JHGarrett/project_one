@@ -1,9 +1,9 @@
-*{
+* {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-body{
+  box-sizing: border-box; }
+
+body {
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -12,40 +12,39 @@ body{
   transform-style: preserve-3d;
   position: relative;
   background-color: aqua;
-  background:url(assets/images/concert5.jpg);
-  font-family: arial;
-}
-.container{
+  background: url(assets/images/concert5.jpg);
+  font-family: Arial; }
+
+.container {
+
   min-width: 1000px;
   min-height: 600px;
   border-radius: 20px;
   position: relative;
   transition: 1.5s ease-in-out;
-  transform-style: preserve-3d;
-  /* box-shadow:0px 0px 40px 15px rgba(0, 0, 0, 0.87); */
-           /* -10px -10px -60px #000; */
-}
-.side{
+  transform-style: preserve-3d; }
+
+.side {
   position: absolute;
   text-align: center;
   width: 100%;
   height: 100%;
   padding-right: 20px 50px;
-  color: #fff;
+  color: #ffffff;
   transform-style: preserve-3d;
   backface-visibility: hidden;
-  border-radius: 20px;
-}
-.content{
+  border-radius: 20px; }
+
+.content {
   transform: translateZ(70px) scale(0.8);
-  line-height: 1.5em;
-}
-.content h1{
+  line-height: 1.5em; }
+
+.content h1 {
   position: relative;
   font-size: 20px;
-  font-family: arial;
-}
-.front{
+  font-family: arial; }
+
+.front {
   z-index: 2;
   background: url(assets/images/concert2.jpg);
   background-size: cover;
@@ -53,72 +52,74 @@ body{
   color: #fff;
   width: 100%;
   height: 100%;
-  box-shadow:0px 0px 50px 20px rgba(0, 0, 0, 0.87);
-}
-.front h1{
+  box-shadow: 0 0 50 20 rgba(0, 0, 0, 0.87); }
+
+.front h1 {
   color: teal;
   font-size: 60px;
-  text-shadow: 3px 4px 10px #000;
+  text-shadow: 3px 4px 10px #000; }
 
-}
-.back{
+.back {
   background-color: #333;
   transform: rotateY(180deg);
   z-index: 0;
   padding-top: 10px;
   background-image: url(assets/images/concert1.jpg);
   background-size: cover;
-  box-shadow:0px 0px 50px 20px rgba(0, 0, 0, 0.87);
+  box-shadow: 0 0 50 20 rgba(0, 0, 0, 0.87); }
+
+.container:hover {
+  transform: rotateY(-180deg); }
 
   
-}
-.container:hover{
-  transform: rotateY(-180deg);
-}
-.back h1{
+
+.back h1 {
   color: teal;
   font-size: 60px;
   margin: 0;
-  text-shadow: 3px 4px 10px #000;
-}
-.back p{
+  text-shadow: 3px 4px 10px #000; }
+
+.back p {
   font-size: 20px;
   margin: 0;
   text-shadow: 3px 4px 10px #000;
-  text-decoration: teal;
-}
-form label, form input{
-  display: block;
-}
-form input, form textarea{
+  text-decoration: teal; }
+
+form label, form input {
+  display: block; }
+
+form input, form textarea {
   background: transparent;
   border: 0;
   border-bottom: 2px solid #fff;
   padding: 5px;
   width: 100%;
   color: teal;
-  outline: none;
-}
-form label{
+  outline: none; }
+
+form label {
   color: #fff;
   font-size: 40px;
   margin-left: 15px 0;
-  text-shadow: 3px 4px 10px #000;
+  text-shadow: 3px 4px 10px #000; }
 
-}
-form input[type="submit"]{
+form input[type="submit"] {
   display: block;
   width: auto;
   margin: 10px auto;
   padding: 5px 10px;
   border: 3px solid #fff;
   border-radius: 4px;
-  color: #fff;
+  color: rgb(182, 174, 174);
   cursor: pointer;
-  text-shadow: 3px 4px 10px #000;
+  text-shadow: 3px 4px 10px #000; }
 
+
+.form-control {
+  background-color:rgb(99, 96, 96);
 }
-.back .content h1:before{
+
+.back .content h1:before {
   content: "";
   position: absolute;
   bottom: -30px;
@@ -126,9 +127,6 @@ form input[type="submit"]{
   background-color: white;
   width: 70px;
   left: 50%;
-  transform: translateX(-50%);
-}
-
-
+  transform: translateX(-50%); }
 
 /*# sourceMappingURL=styles.css.map */
