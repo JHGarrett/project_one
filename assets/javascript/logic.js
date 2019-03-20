@@ -7,7 +7,7 @@ $(document).ready(function() {
         var APPID = "JohnGarr-LiveMerc-PRD-579702c8a-5db31c8d";
         var operationName = "findItemsAdvanced";
         var entriesPerPage = 10;
-        var keywords = "Queen+Merchandise";
+        var keywords = "Taylor+Swift+Merchandise";
 
         var queryURL = "https://cors-ut-bootcamp.herokuapp.com/http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=" + operationName + 
         "&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=" + APPID + "&RESPONSE-DATA-FORMAT=JSON&" + 
@@ -24,6 +24,51 @@ $(document).ready(function() {
             var resultsArray = responseJSON.findItemsAdvancedResponse[0].searchResult[0].item;
 
             console.log(resultsArray);
+
+            for (var i = 0; i < resultsArray.length; i++) {
+                $("#ebayResults").append(makeEbayResultDiv(resultsArray[i], i));
+            }
+        });
+    }
+
+    function makeEbayResultDiv(item, i) {
+        var itemDiv = $("<div>");
+
+        itemDiv.addClass(
+            "ebay-item col-6"
+        ).attr({
+            
+        }).append(
+            $("<h3>").append(
+                $("<a>").attr({
+                    target: "_blank",
+                    href: item.viewItemURL[0]
+                }).text(
+                    item.title[0]
+                )
+            )
+        ).append(
+            $("<h5>").text(
+                "Current Price: " + item.sellingStatus[0].convertedCurrentPrice[0].__value__ + " " + 
+                    item.sellingStatus[0].convertedCurrentPrice[0]["@currencyId"]
+            )
+        ).append(
+            $("<img>").attr({
+                id: "image-" + i
+            })
+        );
+        findImage(item.viewItemURL[0], i);
+        return itemDiv;
+    }
+
+    function findImage(url, i) {
+        var prependURL = "https://cors-ut-bootcamp.herokuapp.com/";
+        $.get(prependURL + url, function(data) {
+            var image = $(data).find("#icImg");
+            console.log($(image).attr("src"));
+            $("#image-" + i).attr({
+                src: $(image).attr("src")
+            });
         });
     }
 
