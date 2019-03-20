@@ -9,6 +9,9 @@
 
 
 
+        // event.preventDefault();
+
+
         if($("#cityInput").val() === "" && $("#bandInput").val() === ""){
             
             alert("please search by a city or band")
