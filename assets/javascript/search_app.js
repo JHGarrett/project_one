@@ -8,7 +8,7 @@
     $(".submitButton").on("click", function(event){
 
 
-        event.preventDefault();
+        // event.preventDefault();
 
         if($("#cityInput").val() === "" && $("#bandInput").val() === ""){
             
