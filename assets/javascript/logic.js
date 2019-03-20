@@ -35,27 +35,29 @@ $(document).ready(function() {
         var itemDiv = $("<div>");
 
         itemDiv.addClass(
-            "ebay-item col-6"
+            "ebay-item col-6 card"
         ).attr({
             
         }).append(
-            $("<h3>").append(
-                $("<a>").attr({
-                    target: "_blank",
-                    href: item.viewItemURL[0]
-                }).text(
-                    item.title[0]
-                )
-            )
-        ).append(
-            $("<h5>").text(
-                "Current Price: " + item.sellingStatus[0].convertedCurrentPrice[0].__value__ + " " + 
-                    item.sellingStatus[0].convertedCurrentPrice[0]["@currencyId"]
-            )
-        ).append(
-            $("<img>").attr({
+            $("<img class='card-img-top'>").attr({
                 id: "image-" + i
             })
+        ).append(
+            $("<div class='card-body'>").append(
+                $("<h3 class='card-title'>").append(
+                    $("<a>").attr({
+                        target: "_blank",
+                        href: item.viewItemURL[0]
+                    }).text(
+                        item.title[0]
+                    )
+                )
+            ).append(
+                $("<h5 class='card-text'>").text(
+                    "Current Price: " + item.sellingStatus[0].convertedCurrentPrice[0].__value__ + " " + 
+                        item.sellingStatus[0].convertedCurrentPrice[0]["@currencyId"]
+                )
+            )
         );
         findImage(item.viewItemURL[0], i);
         return itemDiv;
