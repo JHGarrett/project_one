@@ -89,78 +89,16 @@
                 </div>
             </form>
 
-            
             <a class="btn btn-primary btn-lg" role="button" id="submitButton">Search</a>
+        </div>
+        <div id="results">
+
+        </div>
+
+            </div>
         </div>
     </div>
 </body>
 
-<script>
-
-//For loop goes through the list of movie and pulls data from the OMDB API and displays the movie title, plot poster, and review rating
-
-
-   $("#stateInput").on("change", function(){
-       
-
-
-
-   })
-    
-
-    $("#submitButton").on("click", function(event){
-        event.preventDefault();
-
-        var apiKey = "fEMnsQXTSSaQ9FF0"
-
-        //If user doesn't input city, will search for all locations for upcoming concerts
-        if($("#city-input").val() === ""){
-
-            var locationName = "";
-        }
-        else{
-            var locationID;
-            var queryLocationURL = "https://api.songkick.com/api/3.0/search/locations.json?query="+$("#city-search-input").val()+"&apikey="+apiKey;
-            $.ajax({
-                url: queryLocationURL,
-                method: "GET"
-
-            }).then(function(data){
-                console.log(data);
-                locationID = "";
-
-            })
-            
-        }
-       
-        var bandName = "&artist_name="+$("#band-input").val();
-        console.log(bandName);
-
-
-     
-        var queryURL = "https://api.songkick.com/api/3.0/events.json?apikey="+apiKey+locationName+bandName;
-    
-        //Getting JSON Object for band concerts
-        $.ajax({
-        url: queryURL,
-        method: "GET"
-
-    }).then(function(json){
-        console.log(json);
-
-    })
-
-
-
-    })
-
-
-
-
-
-
-
-
-
-</script>
+<script src="assets/javascript/search_app.js"></script>
 </html>
