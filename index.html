@@ -28,9 +28,9 @@
             <hr class="my-4">
             <form>
                 <div class="form-group">
-                        <div class="form-group">
-                                <label for="state">Select a state</label>
-                                <select class="form-control" id="stateInput">
+                    <p>Must search by city and state and/or by artist</p>
+                    <label for="stateInput">Select a state</label>
+                    <select class="form-control" id="stateInput">
                                         <option value="AL">Alabama</option>
                                         <option value="AK">Alaska</option>
                                         <option value="AZ">Arizona</option>
@@ -82,18 +82,26 @@
                                         <option value="WV">West Virginia</option>
                                         <option value="WI">Wisconsin</option>
                                         <option value="WY">Wyoming</option>
-                                </select>
-                              </div>
-                    <input class="form-control" placeholder="City" id="cityInput">
-                    <input class="form-control" placeholder="Enter band" id="bandInput">
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                            <label for="cityInput">Type a city </label>         
+                            <input class="form-control" placeholder="City" id="cityInput">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bandInput">Type an artist</label>
+                        <input class="form-control" placeholder="Enter band" id="bandInput">
+                    </div>
                 </div>
             </form>
-
             <a class="btn btn-primary btn-lg" role="button" id="submitButton">Search</a>
-        </div>
-        <div id="results">
+            <div id="results">
 
+            </div>
         </div>
+
 
             </div>
         </div>
