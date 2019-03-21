@@ -49,7 +49,9 @@ body {
 /* =================================== */
 /* Artist Acordion */
 /* =================================== */
-
+h1{
+  font-size: 100px
+}
 
 .artistAccordion {
     max-width: 990px;
