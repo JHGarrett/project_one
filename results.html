@@ -46,6 +46,7 @@
             //vars for various data points. all used but time
             var photo, eventURI, event, artistName, eventLocation, date, time;
             artistName = storedResults.performance.displayName;
+            eventLocation = storedResults.performance[1].venue.displayName;
             eventURI = storedResults.uri;
             event = storedResults.displayName;
             date = storedResults.start.date;
