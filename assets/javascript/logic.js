@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     var searchParams = new URLSearchParams(window.location.search);
 
-    var band = searchParams.get("band"); // test
+    var band = searchParams.get("band"); // empty if no user input
     var city = searchParams.get("city");
     var state = searchParams.get("state");
 
