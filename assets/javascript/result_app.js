@@ -42,3 +42,22 @@ function main(){
 
 //Running main program
 main();
+
+
+// can you make it display results in this  format please
+/* <h1>Artist Results</h1>
+
+<div class="artistAccordion">
+
+<div class="box a1">
+            <div class="image_a1">
+                <div class="text">
+                    <h2>Lorem Ipsum</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Vestibulum iaculis nisl sed dictum aliquam.
+                    </p>
+                </div>
+            </div>
+</div>
+</div> */
