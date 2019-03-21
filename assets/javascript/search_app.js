@@ -2,7 +2,6 @@ var locationName = ""
 var bandName = "";
 var apiKey = "fEMnsQXTSSaQ9FF0";
 var searchError= false;
-var globalEvent;
 var prependEventURL = "https://api.songkick.com/api/3.0/events.json?apikey=";
 var prependLocationURL = "https://api.songkick.com/api/3.0/search/locations.json?&apikey="+apiKey+"&query="
 
@@ -21,34 +20,27 @@ var bandArray = [];
 
 function printResults(eventResults){
 
-    //If old search results exist, then remove
-    if($("#songKickResults").children().length >= 1){
-
-        $("#songKickResults").children().remove();
-    }
-
     // Adding new search results
-    $("#results").prepend($("<h4> Search Results </h4>").css("color", "black"))
-    
+    console.log("printing results")
     for(var x = 0; x < eventResults.length; x++){
-        console.log(x)
-        // var row = $("<div class=\"row\">");
-        var col = $("<div class=\"col-md-6\">")
-        var card = $("<div class=\"card\">");
-        var cardBody = $("<div class=\"card-body\">");
-        var artistPerforming = ""
-        for (var y = 0; y < eventResults[x].performance.length; y++){
-            artistPerforming += (eventResults[x].performance[y].displayName + ", ")
-        }
-        artistPerforming.slice(0,-1);
-        console.log(eventResults[0].start.date)
-        cardBody.prepend($("<p class=\"card-text\"> Playing on " + eventResults[x].start.date +" at " + eventResults[x].venue.displayName + "</p>").css("color", "black"))
-        cardBody.prepend($("<p class=\"card-text\">"+artistPerforming+"<p>").css("color", "black"))
-        cardBody.prepend($("<a href=\""+eventResults[x].uri+"\"><h5 class=\"card-title\">"+eventResults[x].displayName+"</h5></a>").css("color", "black"))
-        cardBody.prepend($("<img src=\"http://images.sk-static.com/images/media/profile_images/artists/"+eventResults[x].performance[0].artist.id+"/huge_avatar\" class=\"card-img-top\" alt=\"artist-picture\"> "))
-        $("#songKickResults").append(col.append(card.append(cardBody)))
+        console.log(eventResults.length)
+        var startDate = eventResults[x].start.date;
+        var eventTitle = eventResults[x].displayName;
+        console.log(eventTitle)
+        var backgroundImageLink = "url(\"http://images.sk-static.com/images/media/profile_images/artists/"+eventResults[x].performance[0].artist.id+"/huge_avatar\")";
+        // var backgroundImageLink = "url(\"http://images.sk-static.com/images/media/profile_images/artists/29315/huge_avatar\")";
+        console.log(backgroundImageLink)
+        var artistPerforming = eventResults[x].performance[0].displayName;
+        if (eventResults[x].performance.length > 0){
+            artistPerforming += " & more";
 
-}
+        }
+        console.log(artistPerforming);
+        var outerBox = $("<div>").addClass("box a"+(x+1)).css("background-image", backgroundImageLink);
+        var imageBox = $("<div>").addClass("image_a"+(x+1));
+        var textBox = $("<div>").addClass("text").prepend($("<a href=\""+eventResults[x].uri+"\"><h2>"+eventTitle+"</h2></a>")).append(($("<p> Artists: "+artistPerforming+"</p>")))
+        $(".artistAccordion").append(outerBox.append(imageBox.append(textBox)));
+    }   
 }
 
     $(document).ready(function(){
@@ -127,11 +119,10 @@ function printResults(eventResults){
                             method: "GET"
                     
                             }).then(function(data){
-                            console.log(data)
-                            globalEvent = data;
+                            // globalEvent = data;
                             //Getting event object
                             var eventResults = data.resultsPage.results.event;
-    
+                            console.log(eventResults)
                             //City is in the state but there are no bands in that city performing.
                             if((data === undefined) || (eventResults === undefined)){
                                 searchError = true
@@ -143,8 +134,9 @@ function printResults(eventResults){
                             else{
 
                                 if (band === ""){
-                                    for (var i = 0; i < eventResults.performance.length; i++){
-                                        bandArray.push(eventResults.performance[i].displayName)
+                                    console.log("adding to bandArray")
+                                    for (var i = 0; i < eventResults.length; i++){
+                                        bandArray.push(eventResults[i].performance[0].displayName)
                                     }
                                 }
 
@@ -174,14 +166,14 @@ function printResults(eventResults){
             //When user searches by band only
             }else if(band !== ""){
 
-                var queryEventURL = prependEventURL+apiKey+"&artist_name="+band+"&per_page=50";
+                var queryEventURL = prependEventURL+apiKey+"&artist_name="+band+"&per_page=5";
                 $.ajax({
                     url: queryEventURL,
                     method: "GET"
                 }).then(function(data){
-                    globalEvent = data;
                     //Getting event object
                     var eventResults = data.resultsPage.results.event;
+                    console.log(eventResults)
                     //When user has misspelled name of the artist or the spelling does not match standard format
                 if((data === undefined) || (eventResults === undefined)){
                     searchError = true
