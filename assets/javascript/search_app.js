@@ -1,6 +1,7 @@
 var locationName = ""
 var bandName = "";
 var apiKey = "fEMnsQXTSSaQ9FF0";
+var searchError= false;
 var globalEvent;
 var prependEventURL = "https://api.songkick.com/api/3.0/events.json?apikey=";
 var prependLocationURL = "https://api.songkick.com/api/3.0/search/locations.json?&apikey="+apiKey+"&query="
@@ -53,7 +54,8 @@ function printResults(eventResults){
         //User hasn't input
         if((city === "") && (band === "")){     
             $(".container").children().remove();
-            alert("Please type in an artist's name or location.")
+            // alert("Please type in an artist's name or location.")
+            searchError = true
 
             
 
@@ -132,8 +134,9 @@ function printResults(eventResults){
     
                             //City is in the state but there are no bands in that city performing.
                             if((data === undefined) || (eventResults === undefined)){
-                                console.log("No events found");
-                                alert("City is in the state but there are no bands in that city performing");
+                                searchError = true
+                                // console.log("No events found");
+                                alert("City is in the state but there are no bands performing in that city");
                             }
 
                             //Results have been found from city search
@@ -146,13 +149,15 @@ function printResults(eventResults){
                                 })
                         }else{
                             //User types in city correctly but city is not in the state
-                            alert("Sorry no results found with given city.")
+                            searchError = true
+                            // alert("Sorry no results found with given city.")
                             console.log("Response - user types in city correctly but the city is not in the state.")
                         }
 
                         //When user has misspelled a city.
                     }else{
-                        alert("No results found with given city found");
+                        searchError = true
+                        // alert("No results found with given city found");
                         console.log("Error - mispelled city name")
                     }
 
@@ -172,7 +177,8 @@ function printResults(eventResults){
                     var eventResults = data.resultsPage.results.event;
                     //When user has misspelled name of the artist or the spelling does not match standard format
                 if((data === undefined) || (eventResults === undefined)){
-                        alert("No events found for given band" );
+                    searchError = true
+                        // alert("No events found for given band" );
                     console.log("no events found")
                 }
                 //Query has found band performances.
@@ -185,9 +191,17 @@ function printResults(eventResults){
                 }
                 //When the all input fields are blank 
                 else{
-                    alert("Please check all fields typed correctly.")
+                    searchError = true
+                    console.log("Please check all fields typed correctly.")
                 }
             
         }
+        if(searchError){
+            alert("There's an error in your search.")
+            setTimeout(function(){
+                window.location.href="index.html"
+            }, 1000)
+        }
+
     })
 
