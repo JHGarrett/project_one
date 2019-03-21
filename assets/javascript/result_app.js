@@ -24,7 +24,7 @@ function printResults(){
             artistPerforming += (storedResults[x].performance[y].displayName + ", ")
         }
         console.log(storedResults[0].start.date)
-        cardBody.prepend($("<p class=\"card-text\"> Playing on " + storedResults[x].start.date +" at " + storedResults[x].venue.displayName + "</p>").css("color", "black"))
+        cardBody.prepend($("<p class=\"card-text \"> Playing on " + storedResults[x].start.date +" at " + storedResults[x].venue.displayName + "</p>").css("color", "black"))
         cardBody.prepend($("<p class=\"card-text\">"+artistPerforming+"<p>").css("color", "black"))
         cardBody.prepend($("<a href=\""+storedResults[x].uri+"\"><h5 class=\"card-title\">"+storedResults[x].displayName+"</h5></a>").css("color", "black"))
         cardBody.prepend($("<img src=\"http://images.sk-static.com/images/media/profile_images/artists/"+storedResults[x].performance[0].artist.id+"/huge_avatar\" class=\"card-img-top\" alt=\"artist-picture\"> "))
