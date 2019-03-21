@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-12 col-md-8" id="concert-info">
                     <h2 class="text-center">Concert information</h2>
-                    <div id="event-results">
+                    <div id="songKickResults">
                         
                     </div>
                 </div>
@@ -40,8 +40,17 @@
     <script> 
 
         //receives info from the search, creates divs for each individual var, appends them to a new div var, and appends that div to the event-results div
-        function populateEventResults(photo, event, eventURI, artistName, eventLocation, date) {
+        function populateEventResults(storedResults) {
 
+            console.log(storedResults);
+            //vars for various data points. all used but time
+            var photo, eventURI, event, artistName, eventLocation, date, time;
+            artistName = storedResults.performance.displayName;
+            eventURI = storedResults.uri;
+            event = storedResults.displayName;
+            date = storedResults.start.date;
+            time = storedResults.start.time;
+            
             var newEventDiv = $("<div>"); //div to ultimately append to the event-results div
 
             //divs created for each individual element; IDed for individual styling if necessary
@@ -53,8 +62,9 @@
 
             newEventDiv.append(photoDiv, eventDiv, artistNameDiv, eventLocationDiv, dateDiv);
             $("#event-results").append(newDiv);
-
         }
+
+        populateEventResults(localStorage);
 
     </script>
 
