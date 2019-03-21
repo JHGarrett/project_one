@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     var searchParams = new URLSearchParams(window.location.search);
 
-    var band = searchParams.get("band"); // test
+    var band = searchParams.get("band"); // empty if no user input
     var city = searchParams.get("city");
     var state = searchParams.get("state");
 
@@ -11,22 +11,35 @@ $(document).ready(function() {
     console.log(city);
     console.log(state);
 
-    function ebayAPICall (/* keywords and category */) {
+    // Take note that this band is not the same as the global variable
+    function ebayAPICall (band) {
 
         var APPID = "JohnGarr-LiveMerc-PRD-579702c8a-5db31c8d";
         var operationName = "findItemsAdvanced";
-        var entriesPerPage = 10;
-        var keywords = band + "merchanise";
+        var entriesPerPage = 5;
+        var heroku = "https://cors-ut-bootcamp.herokuapp.com/";
 
-        var queryURL = "https://cors-ut-bootcamp.herokuapp.com/http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=" + operationName + 
+        var reg = new RegExp(" ", "g");
+        var keywords = band.replace(reg, "+");
+        console.log(keywords);
+
+        keywords = keywords + "+Merch";
+
+        console.log(keywords)
+
+        var queryURL = heroku + "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=" + operationName + 
         "&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=" + APPID + "&RESPONSE-DATA-FORMAT=JSON&" + 
         "REST-PAYLOAD=true&paginationInput.entriesPerPage=" + entriesPerPage +
         "&keywords=" + keywords;
+
+        console.log(queryURL);
 
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function(response) {
+
+            // console.log(response);
 
             responseJSON = JSON.parse(response);
             
@@ -35,7 +48,7 @@ $(document).ready(function() {
             console.log(resultsArray);
 
             for (var i = 0; i < resultsArray.length; i++) {
-                $("#ebayResults").append(makeEbayResultDiv(resultsArray[i], i));
+                $(".ebayAccordion").append(makeEbayResultDiv(resultsArray[i], i+1));
             }
         });
     }
@@ -44,16 +57,10 @@ $(document).ready(function() {
         var itemDiv = $("<div>");
 
         itemDiv.addClass(
-            "ebay-item col-6 card"
-        ).attr({
-            
-        }).append(
-            $("<img class='card-img-top'>").attr({
-                id: "image-" + i
-            })
+            "ebay-item box b" + i
         ).append(
-            $("<div class='card-body'>").append(
-                $("<h3 class='card-title'>").append(
+            $("<div class='text'>").append(
+                $("<h2>").append(
                     $("<a>").attr({
                         target: "_blank",
                         href: item.viewItemURL[0]
@@ -62,7 +69,7 @@ $(document).ready(function() {
                     )
                 )
             ).append(
-                $("<h5 class='card-text'>").text(
+                $("<p>").text(
                     "Current Price: " + item.sellingStatus[0].convertedCurrentPrice[0].__value__ + " " + 
                         item.sellingStatus[0].convertedCurrentPrice[0]["@currencyId"]
                 )
@@ -73,35 +80,15 @@ $(document).ready(function() {
     }
 
     function findImage(url, i) {
+
         var prependURL = "https://cors-ut-bootcamp.herokuapp.com/";
         $.get(prependURL + url, function(data) {
             var image = $(data).find("#icImg");
             console.log($(image).attr("src"));
-            $("#image-" + i).attr({
-                src: $(image).attr("src")
-            });
+            $(".b"+i).css("background-image", "url(" + $(image).attr("src") + ")");
         });
     }
 
-    ebayAPICall();
+    ebayAPICall(band);
 
 });
-
-
-// can you make it like this
-/* <h1>Merchandise Results</h1>
-
-<div class="ebayAccordion">
-
-<div class="box b1">
-            <div class="image_b1">
-                <div class="text">
-                    <h2>Lorem Ipsum</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Vestibulum iaculis nisl sed dictum aliquam.
-                    </p>
-                </div>
-            </div>
-</div>
-</div> */
