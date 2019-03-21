@@ -6,7 +6,6 @@ var globalEvent;
 var prependEventURL = "https://api.songkick.com/api/3.0/events.json?apikey=";
 var prependLocationURL = "https://api.songkick.com/api/3.0/search/locations.json?&apikey="+apiKey+"&query="
 
-<<<<<<< HEAD
 var searchParams = new URLSearchParams(window.location.search);
 
 var band = searchParams.get("band"); // test
@@ -18,13 +17,6 @@ console.log(city);
 console.log(state);
 
 var bandArray = [];
-=======
-    // find url key values and set them
-    // songkickAPICall (key value pairs)
-
-    //rename to songkickAPICall
-    $(".submitButton").on("click", function(event){
->>>>>>> b8b9ca2202357bf4ec95fc484915084796208a24
 
 
 function printResults(eventResults){
@@ -118,7 +110,8 @@ function printResults(eventResults){
                         //If the band input field is not blank, band name value is stored in query. Else, the user is searching by location only.
                         if(band !== ""){
                             bandName = "&artist_name="+band;
-                        }
+                        }  
+                        
 
                         console.log(bandName);
                 
@@ -148,6 +141,13 @@ function printResults(eventResults){
 
                             //Results have been found from city search
                             else{
+
+                                if (band === ""){
+                                    for (var i = 0; i < eventResults.performance.length; i++){
+                                        bandArray.push(eventResults.performance[i].displayName)
+                                    }
+                                }
+
 
                                 printResults(eventResults);
                             }
