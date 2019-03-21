@@ -39,7 +39,7 @@
 
     <script> 
 
-        //receives info from the search, creates divs for each individual var, appends them to a new div var, and appends that div to the event-results div
+        //receives info from the search, creates divs for each individual var, appends them to a new div var, and appends that div to the songKickResults div
         function populateEventResults(storedResults) {
 
             console.log(storedResults);
@@ -62,7 +62,7 @@
             var dateDiv = $("<div id='dateDiv'>"+date+"</div>");
 
             newEventDiv.append(photoDiv, eventDiv, artistNameDiv, eventLocationDiv, dateDiv);
-            $("#event-results").append(newDiv);
+            $("#songKickResults").append(newDiv);
         }
 
         populateEventResults(localStorage);
