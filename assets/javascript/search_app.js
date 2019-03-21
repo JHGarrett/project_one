@@ -16,6 +16,8 @@ console.log(band);
 console.log(city);
 console.log(state);
 
+var bandArray = [];
+
 
 function printResults(eventResults){
 
@@ -55,7 +57,7 @@ function printResults(eventResults){
         if((city === "") && (band === "")){     
             $(".container").children().remove();
             // alert("Please type in an artist's name or location.")
-            searchError = true
+            searchError = true;
 
             
 
@@ -87,12 +89,9 @@ function printResults(eventResults){
                     if(results !== undefined){
                         for (var i = 0; i < results.length; i++){
                             if(results[i].metroArea.country.displayName === "US"){
-                                // console.log(results[i].metroArea.state.displayName);
                                 //If the state in the location query matches the state that the user inputted, we have found a match of that city for the specifed state. MetroID is assigned.
                                 if((results[i].metroArea.state.displayName === stateName)){
                                     metroID = results[i].metroArea.id;
-                                    // console.log(metroID);
-                                    // console.log(i);
                                     break;
                                 }
                             }
@@ -117,7 +116,7 @@ function printResults(eventResults){
                 
                         //If we are searching by location
                         if(locationName !== ""){
-                            var queryEventURL = prependEventURL+apiKey+locationName+bandName+"&per_page=50";
+                            var queryEventURL = prependEventURL+apiKey+locationName+bandName+"&per_page=5";
                             bandName = "";
                             console.log(queryEventURL)
                         

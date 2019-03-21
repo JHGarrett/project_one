@@ -41,16 +41,19 @@
                         <br>
                         <br>
     
-                        <form action="">
-                            <label for="">Artist Name :</label>
+                        <form action="resultsPage.html">
+                            <label for="band">Artist Name: </label>
                             <br>
-                            <input type="text" name="" placeholder="Type the Artist name" id="bandInput">
+                            <input type="text" name="band" placeholder="Type the Artist name" id="bandInput">
                             <br>
-                            <label for="">City :</label>
-                            <input type="text" name="" placeholder="Type the city name" id="cityInput">
+                            <label>Location:</label>
                             <br>
-                            <label for="stateInput">Select a state:</label>
-                            <select class="form-control" id="stateInput">
+                            <label for="city">City:</label>
+                            <input type="text" name="city" placeholder="Type the city name" id="cityInput">
+                            <br>
+                            <label for="state">Select a state:</label>
+                            <select class="form-control" id="stateInput" name="state">
+                                         <option value=""></option>
                                         <option value="AL">Alabama</option>
                                         <option value="AK">Alaska</option>
                                         <option value="AZ">Arizona</option>
@@ -103,9 +106,10 @@
                                         <option value="WI">Wisconsin</option>
                                         <option value="WY">Wyoming</option>
                         </select>
+                        <button class="submitButton" type="submit">Check out the Results!</button>
+                    </form>
                     </div>
-                    <button class="submitButton" type="submit"><a href="resultsPage.html">Check out the Results!</a></button>
-                </form>
+  
                     </div>
                 </div>
         
@@ -118,8 +122,8 @@
         </div>
 
 
-    <script src="assets/javascript/search_app.js"></script>
-    <script src="assets/javascript/logic.js"></script>
+    <!-- <script src="assets/javascript/search_app.js"></script>
+    <script src="assets/javascript/logic.js"></script> -->
 </body>
 
 </html>
