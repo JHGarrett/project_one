@@ -6,6 +6,7 @@ var globalEvent;
 var prependEventURL = "https://api.songkick.com/api/3.0/events.json?apikey=";
 var prependLocationURL = "https://api.songkick.com/api/3.0/search/locations.json?&apikey="+apiKey+"&query="
 
+<<<<<<< HEAD
 var searchParams = new URLSearchParams(window.location.search);
 
 var band = searchParams.get("band"); // test
@@ -17,6 +18,13 @@ console.log(city);
 console.log(state);
 
 var bandArray = [];
+=======
+    // find url key values and set them
+    // songkickAPICall (key value pairs)
+
+    //rename to songkickAPICall
+    $(".submitButton").on("click", function(event){
+>>>>>>> b8b9ca2202357bf4ec95fc484915084796208a24
 
 
 function printResults(eventResults){
