@@ -26,13 +26,13 @@
             </navbar> -->
             
             <div class="front side">
-                    <div class="content">
-                        <br><br><br>
-                        <br><br><br>
-                        <h1>LiveMerch</h1>
+                <div class="content">
+                    <br><br><br>
+                    <br><br><br>
+                    <h1>LiveMerch</h1>
 
-                    </div>
                 </div>
+            </div>
         
                 <div class="back side">
                     <div class="content">
@@ -44,16 +44,17 @@
                         <br>
                         <br>
     
-                        <form action="">
-                            <label for="">Artist Name :</label>
+                        <form action="results.html">
+                            <label for="bandInput">Artist Name :</label>
                             <br>
-                            <input type="text" name="" placeholder="Type the Artist name" id="bandInput">
+                            <input type="text" name="band" placeholder="Type the Artist name" id="bandInput" autocomplete="off">
                             <br>
-                            <label for="">City :</label>
-                            <input type="text" name="" placeholder="Type the city name" id="cityInput">
+                            <label for="cityInput">City :</label>
+                            <input type="text" name="city" placeholder="Type the city name" id="cityInput" autocomplete="off">
                             <br>
                             <label for="stateInput">Select a state:</label>
-                            <select class="form-control" id="stateInput">
+                            <select class="form-control" name="state" id="stateInput">
+                                        <option value=""></option>
                                         <option value="AL">Alabama</option>
                                         <option value="AK">Alaska</option>
                                         <option value="AZ">Arizona</option>
@@ -105,12 +106,11 @@
                                         <option value="WV">West Virginia</option>
                                         <option value="WI">Wisconsin</option>
                                         <option value="WY">Wyoming</option>
-                        </select>
-                    </div>
-                    <button class="submitButton" type="submit"><a href="resultsPage.html">Check out the Results!</a></button>
-                    <!-- <a id="submitButton" href="/resultsPage.html">Submit</a> -->
-                            <!-- <input type="submit" name="" id="submitButton" value="Submit"> -->
-                </form>
+                            </select>
+                            <button class="submitButton" type="submit">Check out the Results!</button>
+                            <!-- <a id="submitButton" href="/resultsPage.html">Submit</a> -->
+                                    <!-- <input type="submit" name="" id="submitButton" value="Submit"> -->
+                        </form>
                     </div>
                 </div>
         
@@ -209,8 +209,8 @@
             </div>
         </div> -->
 
-    <script src="assets/javascript/search_app.js"></script>
-    <script src="assets/javascript/logic.js"></script>
+    <!-- <script src="assets/javascript/search_app.js"></script>
+    <script src="assets/javascript/logic.js"></script> -->
 </body>
 
 </html>

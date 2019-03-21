@@ -1,13 +1,22 @@
 $(document).ready(function() {
 
 
+    var searchParams = new URLSearchParams(window.location.search);
+
+    var band = searchParams.get("band"); // test
+    var city = searchParams.get("city");
+    var state = searchParams.get("state");
+
+    console.log(band);
+    console.log(city);
+    console.log(state);
 
     function ebayAPICall (/* keywords and category */) {
 
         var APPID = "JohnGarr-LiveMerc-PRD-579702c8a-5db31c8d";
         var operationName = "findItemsAdvanced";
         var entriesPerPage = 10;
-        var keywords = "Taylor+Swift+Merchandise";
+        var keywords = band + "merchanise";
 
         var queryURL = "https://cors-ut-bootcamp.herokuapp.com/http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=" + operationName + 
         "&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=" + APPID + "&RESPONSE-DATA-FORMAT=JSON&" + 

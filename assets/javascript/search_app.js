@@ -4,11 +4,14 @@
     var doneGettingLocation = false;
     var globalEvent;
 
-    
+    // find url key values and set them
+    // songkickAPICall (key value pairs)
+
+    //rename to songkickAPICall
     $(".submitButton").on("click", function(event){
 
 
-        event.preventDefault();
+        // event.preventDefault();
 
         if($("#cityInput").val() === "" && $("#bandInput").val() === ""){
             
