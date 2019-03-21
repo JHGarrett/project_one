@@ -1,61 +1,94 @@
-    var locationName = ""
-    var bandName = "";
-    var apiKey = "fEMnsQXTSSaQ9FF0";
-    var doneGettingLocation = false;
-    var globalEvent;
+var locationName = ""
+var bandName = "";
+var apiKey = "fEMnsQXTSSaQ9FF0";
+var searchError= false;
+var prependEventURL = "https://api.songkick.com/api/3.0/events.json?apikey=";
+var prependLocationURL = "https://api.songkick.com/api/3.0/search/locations.json?&apikey="+apiKey+"&query="
 
-    // find url key values and set them
-    // songkickAPICall (key value pairs)
+var searchParams = new URLSearchParams(window.location.search);
 
-    //rename to songkickAPICall
-    $(".submitButton").on("click", function(event){
+var band = searchParams.get("band"); // test
+var city = searchParams.get("city");
+var state = searchParams.get("state");
+
+console.log(band);
+console.log(city);
+console.log(state);
+
+var bandArray = [];
 
 
+function printResults(eventResults){
 
-        // event.preventDefault();
+    // Adding new search results
+    console.log("printing results")
+    for(var x = 0; x < eventResults.length; x++){
+        console.log(eventResults.length)
+        var startDate = eventResults[x].start.date;
+        var eventTitle = eventResults[x].displayName;
+        console.log(eventTitle)
+        var backgroundImageLink = "url(\"http://images.sk-static.com/images/media/profile_images/artists/"+eventResults[x].performance[0].artist.id+"/huge_avatar\")";
+        console.log(backgroundImageLink)
+        var artistPerforming = eventResults[x].performance[0].displayName;
+        if (eventResults[x].performance.length > 0){
+            artistPerforming += " & more";
 
+        }
+        console.log(artistPerforming);
+        var outerBox = $("<div>").addClass("box a"+(x+1)).css("background-image", backgroundImageLink);
+        var imageBox = $("<div>").addClass("image_a"+(x+1));
+        var textBox = $("<div>").addClass("text").prepend($("<a href=\""+eventResults[x].uri+"\"><h2>"+eventTitle+"</h2></a>")).append(($("<p> Artists: "+artistPerforming+"</p>")))
+        $(".artistAccordion").append(outerBox.append(imageBox.append(textBox)));
+    }   
+}
 
-        if($("#cityInput").val() === "" && $("#bandInput").val() === ""){
+    $(document).ready(function(){
+
+        //User hasn't input
+        if((city === "") && (band === "")){     
+            $(".container").children().remove();
+            // alert("Please type in an artist's name or location.")
+            searchError = true;
+
             
-            alert("please search by a city or band")
 
         } else{
+
         //If user doesn't input artist, will search for all  for upcoming concerts at indicated locaiton. 
         //Searches the location query based on what city the user puts. Metro ID is retrieved with the city that matches the state the user specifies.
-            if(($("#cityInput").val() !== "") && ($("#stateInput").val() !== "")){
+            if((city !== "") && (state !== "")){
                 //Getting city and state values
-                var stateName = $("#stateInput").val();
-                var metroName = $("#cityInput").val().trim();
-                //clearing city input
-                $("#cityInput").val("")
+                var stateName = state;
+                var metroName = city;
+                console.log("xxxx")
                 //Searching in the location end point to obtain a metroID for the city in the specificed state
                 var metroID;
-                var queryLocationURL = "https://api.songkick.com/api/3.0/search/locations.json?query="+metroName+"&apikey="+apiKey;
-                // console.log(queryLocationURL)
+                var queryLocationURL = prependLocationURL+metroName+"&apikey="+apiKey;
+                console.log(queryLocationURL)
 
                 $.ajax({
                     url: queryLocationURL,
                     method: "GET"
 
                 }).then(function(data){
+                    //Getting location object
+                    console.log("ooo")
+                    console.log(data)
                     var results = data.resultsPage.results.location;
                     console.log(results)
 
                     if(results !== undefined){
                         for (var i = 0; i < results.length; i++){
                             if(results[i].metroArea.country.displayName === "US"){
-                                // console.log(results[i].metroArea.state.displayName);
                                 //If the state in the location query matches the state that the user inputted, we have found a match of that city for the specifed state. MetroID is assigned.
                                 if((results[i].metroArea.state.displayName === stateName)){
                                     metroID = results[i].metroArea.id;
-                                    // console.log(metroID);
-                                    // console.log(i);
                                     break;
                                 }
                             }
                         }
     
-                        //Query is able to find the city and state. Add metroID to the event query URL string. If query cannot find a match, a metroID will not assigned and locationName will be an empty string
+                        //Query is able to find the city in the state. Add metroID to the event query URL string. If query cannot find a match, a metroID will not assigned and locationName will be an empty string
                         if(metroID !== undefined){
                             locationName = "&location=sk:"+metroID;
                         }
@@ -65,16 +98,17 @@
     
                         // console.log("Getting band name")
     
-                        //Getting band name from the input field if it's not blank
-                        if($("#bandInput").val() !== ""){
-                            bandName = "&artist_name="+$("#bandInput").val();
-                            $("#bandInput").val("")
-                        }
-                        // console.log(bandName);
+                        //If the band input field is not blank, band name value is stored in query. Else, the user is searching by location only.
+                        if(band !== ""){
+                            bandName = "&artist_name="+band;
+                        }  
+                        
+
+                        console.log(bandName);
                 
                         //If we are searching by location
                         if(locationName !== ""){
-                            var queryEventURL = "https://api.songkick.com/api/3.0/events.json?apikey="+apiKey+locationName+bandName+"&per_page=5";
+                            var queryEventURL = prependEventURL+apiKey+locationName+bandName+"&per_page=5";
                             bandName = "";
                             console.log(queryEventURL)
                         
@@ -84,123 +118,88 @@
                             method: "GET"
                     
                             }).then(function(data){
-                            console.log(data)
-                            globalEvent = data;
+                            // globalEvent = data;
+                            //Getting event object
                             var eventResults = data.resultsPage.results.event;
-    
-                            //If no query has been found after searching by city
+                            console.log(eventResults)
+                            //City is in the state but there are no bands in that city performing.
                             if((data === undefined) || (eventResults === undefined)){
-                                console.log("No events found");
-                                alert("No events found");
+                                searchError = true
+                                // console.log("No events found");
+                                alert("City is in the state but there are no bands performing in that city");
                             }
 
                             //Results have been found from city search
                             else{
 
-                                localStorage.setItem("result", JSON.stringify(eventResults));
+                                if (band === ""){
+                                    console.log("adding to bandArray")
+                                    for (var i = 0; i < eventResults.length; i++){
+                                        bandArray.push(eventResults[i].performance[0].displayName)
+                                    }
+                                }
 
-                                
 
-                                //If old search results exist, then remove them
-                                // if($("#results").children().length >= 1){
-                            
-                                //     $("#results").children().remove();
-                                // }
-
-                                //Adding new search results in the results div
-                                // $("#results").prepend($("<h4> Search Results </h4>").css("color", "black"))
-                                // console.log(eventResults);
-                                // for(var x = 0; x < eventResults.length; x++){
-                                //     console.log(x)
-                                //     var row = $("<div class=\"row\">");
-                                //     var col = $("<div class=\"col-md-6\">")
-                                //     var card = $("<div class=\"card\">");
-                                //     var cardBody = $("<div class=\"card-body\">");
-                                //     var artistPerforming = ""
-                                //     for (var y = 0; y < eventResults[x].performance.length; y++){
-                                //         artistPerforming += (eventResults[x].performance[y].displayName + " ")
-    
-                                //     }
-                                //     console.log(eventResults[0].start.date)
-                                //     cardBody.prepend($("<p class=\"card-text\"> Playing on " + eventResults[x].start.date +" at " + eventResults[x].venue.displayName + "</p>").css("color", "black"))
-                                //     cardBody.prepend($("<p class=\"card-text\">"+artistPerforming+"<p>").css("color", "black"))
-                                //     cardBody.prepend($("<h5 class=\"card-title\">"+eventResults[x].displayName+"</h5>").css("color", "black"))
-                                //     $("#results").append(row.append(col.append(card.append(cardBody))))    
-                                // }
+                                printResults(eventResults);
                             }
                             
                     
                                 })
                         }else{
-                            //When there are no bands in that city performing
-                            alert("Sorry no results found with given city.")
-                            console.log("Response - no bands are playing in that current city.")
+                            //User types in city correctly but city is not in the state
+                            searchError = true
+                            // alert("Sorry no results found with given city.")
+                            console.log("Response - user types in city correctly but the city is not in the state.")
                         }
 
-                        //When user has misspelled a city for a state
+                        //When user has misspelled a city.
                     }else{
-                        alert("No results found with given city found");
-                        console.log("Error - misspelled city name")
+                        searchError = true
+                        // alert("No results found with given city found");
+                        console.log("Error - mispelled city name")
                     }
 
 
                 })
             
             //When user searches by band only
-            }else if($("#bandInput").val() !== ""){
+            }else if(band !== ""){
 
-                var queryEventURL = "https://api.songkick.com/api/3.0/events.json?apikey="+apiKey+"&artist_name="+$("#bandInput").val()+"&per_page=5";
-                $("#bandInput").val("")
+                var queryEventURL = prependEventURL+apiKey+"&artist_name="+band+"&per_page=5";
                 $.ajax({
                     url: queryEventURL,
                     method: "GET"
                 }).then(function(data){
-                    globalEvent = data;
+                    //Getting event object
                     var eventResults = data.resultsPage.results.event;
-                    //If no query is found. Reasons - user has misspelled name of artist
+                    console.log(eventResults)
+                    //When user has misspelled name of the artist or the spelling does not match standard format
                 if((data === undefined) || (eventResults === undefined)){
-                        alert("No events found");
+                    searchError = true
+                        // alert("No events found for given band" );
                     console.log("no events found")
                 }
-                //Else, storing results and printing results
+                //Query has found band performances.
                 else{
-
-                    //Storing result
-                    localStorage.setItem("result", JSON.stringify(eventResults));
-
-                    //If old search results exist, then remove
-                    // if($("#results").children().length >= 1){
-
-                    //     $("#results").children().remove();
-                    // }
-                    //Adding new search results
-                    // $("#results").prepend($("<h4> Search Results </h4>").css("color", "black"))
-                    // console.log(eventResults);
-                    // for(var x = 0; x < eventResults.length; x++){
-                    //     console.log(x)
-                    //     var row = $("<div class=\"row\">");
-                    //     var col = $("<div class=\"col-md-6\">")
-                    //     var card = $("<div class=\"card\">");
-                    //     var cardBody = $("<div class=\"card-body\">");
-                    //     var artistPerforming = ""
-                    //     for (var y = 0; y < eventResults[x].performance.length; y++){
-                    //         artistPerforming += (eventResults[x].performance[y].displayName + " ")
-                    //     }
-                    //     console.log(eventResults[0].start.date)
-                    //     cardBody.prepend($("<p class=\"card-text\"> Playing on " + eventResults[x].start.date +" at " + eventResults[x].venue.displayName + "</p>").css("color", "black"))
-                    //     cardBody.prepend($("<p class=\"card-text\">"+artistPerforming+"<p>").css("color", "black"))
-                    //     cardBody.prepend($("<h5 class=\"card-title\">"+eventResults[x].displayName+"</h5>").css("color", "black"))
-                    //     $("#results").append(row.append(col.append(card.append(cardBody))))
-                        
-                    // }
+                    printResults(eventResults);
                 }
 
 
                     })
-                }       
+                }
+                //When the all input fields are blank 
+                else{
+                    searchError = true
+                    console.log("Please check all fields typed correctly.")
+                }
             
         }
+        if(searchError){
+            alert("There's an error in your search.")
+            setTimeout(function(){
+                window.location.href="index.html"
+            }, 1000)
+        }
+
     })
-
-
 
