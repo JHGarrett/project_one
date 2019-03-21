@@ -53,23 +53,6 @@ $(document).ready(function() {
         });
     }
 
-
-    /* <h1>Merchandise Results</h1>
-
-<div class="ebayAccordion">
-
-<div class="box b1">
-    <div class="image_b1">
-        <div class="text">
-            <h2>Lorem Ipsum</h2>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Vestibulum iaculis nisl sed dictum aliquam.
-            </p>
-        </div>
-    </div>
-</div>
-*/
     function makeEbayResultDiv(item, i) {
         var itemDiv = $("<div>");
 
