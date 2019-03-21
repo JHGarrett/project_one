@@ -28,7 +28,6 @@ function printResults(eventResults){
         var eventTitle = eventResults[x].displayName;
         console.log(eventTitle)
         var backgroundImageLink = "url(\"http://images.sk-static.com/images/media/profile_images/artists/"+eventResults[x].performance[0].artist.id+"/huge_avatar\")";
-        // var backgroundImageLink = "url(\"http://images.sk-static.com/images/media/profile_images/artists/29315/huge_avatar\")";
         console.log(backgroundImageLink)
         var artistPerforming = eventResults[x].performance[0].displayName;
         if (eventResults[x].performance.length > 0){
