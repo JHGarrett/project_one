@@ -4,7 +4,7 @@ var prependLocationURL = "https://api.songkick.com/api/3.0/search/locations.json
 
 $(document).ready(function() {
 
-    $(".submitButton").on("click", function(event){
+    $("#submitButton").on("click", function(event){
         event.preventDefault();
 
         var band = $("#bandInput").val().trim();
@@ -16,7 +16,8 @@ $(document).ready(function() {
                 console.log("invalid");
                 //User types invalid band name
                 if(band !== ""){
-                    $(".modal-body p").text("Band is invalid");
+                    $(".modal-body p").text("Sorry, we couldn't find your band.  If there are numbers in your artist's name "
+                    + "(e.g. Three Days Grace), please try the way you type the number. (3 Days Grace ↔ Three Days Grace)");
                     $("#errorModal").modal("show");
 
                 //Only searching by location
