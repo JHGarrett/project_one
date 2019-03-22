@@ -1,15 +1,49 @@
+var locationName = ""
+var bandName = "";
+var apiKey = "fEMnsQXTSSaQ9FF0";
+var searchError= false;
+var prependEventURL = "https://api.songkick.com/api/3.0/events.json?apikey=";
+var prependLocationURL = "https://api.songkick.com/api/3.0/search/locations.json?&apikey="+apiKey+"&query="
+
+var searchParams = new URLSearchParams(window.location.search);
+
+var band = searchParams.get("band"); // test
+var city = searchParams.get("city");
+var state = searchParams.get("state");
+
+console.log(band);
+console.log(city);
+console.log(state);
+
+var bandArray = [];
+
+
+
 $(document).ready(function() {
 
+    function printResults(eventResults){
 
-    var searchParams = new URLSearchParams(window.location.search);
-
-    var band = searchParams.get("band"); // empty if no user input
-    var city = searchParams.get("city");
-    var state = searchParams.get("state");
-
-    console.log(band);
-    console.log(city);
-    console.log(state);
+        // Adding new search results
+        console.log("printing results")
+        for(var x = 0; x < eventResults.length; x++){
+            console.log(eventResults.length)
+            var startDate = eventResults[x].start.date;
+            var eventTitle = eventResults[x].displayName;
+            console.log(eventTitle)
+            var backgroundImageLink = "url(\"http://images.sk-static.com/images/media/profile_images/artists/"+eventResults[x].performance[0].artist.id+"/huge_avatar\")";
+            console.log(backgroundImageLink)
+            var artistPerforming = eventResults[x].performance[0].displayName;
+            if (eventResults[x].performance.length > 0){
+                artistPerforming += " & more";
+    
+            }
+            console.log(artistPerforming);
+            var outerBox = $("<div>").addClass("box a"+(x+1)).css("background-image", backgroundImageLink);
+            var imageBox = $("<div>").addClass("image_a"+(x+1));
+            var textBox = $("<div>").addClass("text").prepend($("<a href=\""+eventResults[x].uri+"\"><h2>"+eventTitle+"</h2></a>")).append(($("<p> Artists: "+artistPerforming+"</p>")))
+            $(".artistAccordion").append(outerBox.append(imageBox.append(textBox)));
+        }   
+    }
 
     // Take note that this band is not the same as the global variable
     function ebayAPICall (band) {
@@ -19,6 +53,7 @@ $(document).ready(function() {
         var entriesPerPage = 5;
         var heroku = "https://cors-ut-bootcamp.herokuapp.com/";
 
+        //Replace spaces in with +s in band search
         var reg = new RegExp(" ", "g");
         var keywords = band.replace(reg, "+");
         console.log(keywords);
@@ -39,14 +74,13 @@ $(document).ready(function() {
             method: "GET"
         }).then(function(response) {
 
-            // console.log(response);
-
             responseJSON = JSON.parse(response);
             
             var resultsArray = responseJSON.findItemsAdvancedResponse[0].searchResult[0].item;
 
             console.log(resultsArray);
 
+            // If no results are returned then display stand alone telling the user that
             if (resultsArray.length === 0) {
 
                 var itemDiv = $("<div>");
