@@ -47,9 +47,30 @@ $(document).ready(function() {
 
             console.log(resultsArray);
 
-            for (var i = 0; i < resultsArray.length; i++) {
-                $(".ebayAccordion").append(makeEbayResultDiv(resultsArray[i], i+1));
+            if (resultsArray.length === 0) {
+
+                var itemDiv = $("<div>");
+
+                itemDiv.addClass(
+                    "ebay-item box b" + 0
+                ).append(
+                    $("<div class='text'>").append(
+                        $("<h2>").text(
+                            "Sorry no results were found."
+                        )
+                    )
+                );
+                $(".b0").css("background-image", "url(assets/images/compressedLoading.gif)")
+
+                $(".ebayAccordion").append(itemDiv);
+
+            } else {
+                for (var i = 0; i < resultsArray.length; i++) {
+                    $(".ebayAccordion").append(makeEbayResultDiv(resultsArray[i], i+1));
+                }
             }
+
+            
         });
     }
 
