@@ -110,6 +110,7 @@ p {
 }
 
 h1 {
+    font-size: 50px;
     width: 250px;
     text-align: center;
     margin: 100px auto 20px auto;
