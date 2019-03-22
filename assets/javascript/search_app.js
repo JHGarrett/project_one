@@ -49,17 +49,15 @@ function printResults(eventResults){
     }   
 }
 
-    $(document).ready(function(){
+$(document).ready(function(){
 
-        //User hasn't input
-        if((city === "") && (band === "")){     
-            $(".container").children().remove();
-            // alert("Please type in an artist's name or location.")
-            searchError = true;
+    //User hasn't input
+    if((city === "") && (band === "")){     
+        $(".container").children().remove();
+        // alert("Please type in an artist's name or location.")
+        searchError = true;
 
-            
-
-        } else{
+    } else{
 
         //If user doesn't input artist, will search for all  for upcoming concerts at indicated locaiton. 
         //Searches the location query based on what city the user puts. Metro ID is retrieved with the city that matches the state the user specifies.
@@ -92,76 +90,78 @@ function printResults(eventResults){
                                 }
                             }
                         }
-    
-                        //Query is able to find the city in the state. Add metroID to the event query URL string. If query cannot find a match, a metroID will not assigned and locationName will be an empty string
-                        if(metroID !== undefined){
-                            locationName = "&location=sk:"+metroID;
-                        }
-    
-    
-                        // console.log(locationName);
-    
-                        // console.log("Getting band name")
-    
-                        //If the band input field is not blank, band name value is stored in query. Else, the user is searching by location only.
-                        if(band !== ""){
-                            bandName = "&artist_name="+band;
-                        }  
-                        
+                    }
 
-                        console.log(bandName);
+                    //Query is able to find the city in the state. Add metroID to the event query URL string. If query cannot find a match, a metroID will not assigned and locationName will be an empty string
+                    if(metroID !== undefined){
+                        locationName = "&location=sk:"+metroID;
+                    }
+
+
+                    // console.log(locationName);
+
+                    // console.log("Getting band name")
+
+                    //If the band input field is not blank, band name value is stored in query. Else, the user is searching by location only.
+                    if(band !== ""){
+                        bandName = "&artist_name="+band;
+                    }  
+                    
+
+                    console.log(bandName);
+            
+                    //If we are searching by location
+                    if(locationName !== ""){
+                        var queryEventURL = prependEventURL+apiKey+locationName+bandName+"&per_page=5";
+                        bandName = "";
+                        console.log(queryEventURL)
+                    
+                        //Getting JSON Object for band concerts
+                        $.ajax({
+                        url: queryEventURL,
+                        method: "GET"
                 
-                        //If we are searching by location
-                        if(locationName !== ""){
-                            var queryEventURL = prependEventURL+apiKey+locationName+bandName+"&per_page=5";
-                            bandName = "";
-                            console.log(queryEventURL)
-                        
-                            //Getting JSON Object for band concerts
-                            $.ajax({
-                            url: queryEventURL,
-                            method: "GET"
-                    
-                            }).then(function(data){
-                            //Getting event object
-                            var eventResults = data.resultsPage.results.event;
-                            console.log(eventResults)
-                            //City is in the state but there are no bands in that city performing.
-                            if((data === undefined) || (eventResults === undefined)){
-                                searchError = true
-                                runError(searchError)
-                            }
-
-                            //Results have been found from city search
-                            else{
-
-                                if (band === ""){
-                                    console.log("adding to bandArray")
-                                    for (var i = 0; i < eventResults.length; i++){
-                                        bandArray.push(eventResults[i].performance[0].displayName)
-                                    }
-                                }
-
-
-                                printResults(eventResults);
-                            }
-                            
-                    
-                                })
-                        }else{
-                            //User types in city correctly but city is not in the state
+                        }).then(function(data){
+                        // globalEvent = data;
+                        //Getting event object
+                        var eventResults = data.resultsPage.results.event;
+                        console.log(eventResults)
+                        //City is in the state but there are no bands in that city performing.
+                        if((data === undefined) || (eventResults === undefined)){
                             searchError = true
                             runError(searchError)
                             console.log("Response - user types in city correctly but the city is not in the state.")
                         }
 
-                        //When user has misspelled a city.
+                        //Results have been found from city search
+                        else{
+
+                            if (band === ""){
+                                console.log("adding to bandArray")
+                                for (var i = 0; i < eventResults.length; i++){
+                                    bandArray.push(eventResults[i].performance[0].displayName)
+                                }
+                            }
+
+
+                            printResults(eventResults);
+                        }
+                        
+                
+                            })
                     }else{
+                        //User types in city correctly but city is not in the state
                         searchError = true
                         runError(searchError)
                         console.log("Error - mispelled city name")
                     }
 
+                    //When user has misspelled a city.
+                }else{
+                    searchError = true
+                    // alert("No results found with given city found");
+                    console.log("Error - mispelled city name")
+                }
 
                 })
             

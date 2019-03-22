@@ -27,9 +27,9 @@ $(document).ready(function() {
 
         console.log(keywords)
 
-        var queryURL = heroku + "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=" + operationName + 
+        var queryURL = heroku + "https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=" + operationName + 
         "&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=" + APPID + "&RESPONSE-DATA-FORMAT=JSON&" + 
-        "REST-PAYLOAD=true&paginationInput.entriesPerPage=" + entriesPerPage +
+        "REST-PAYLOAD=true&paginationInput.entriesPerPage=" + entriesPerPage + "&categoryId=11450" +
         "&keywords=" + keywords;
 
         console.log(queryURL);
