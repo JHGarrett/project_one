@@ -23,7 +23,7 @@
     
         <div class="container">
             
-            <div class="front side">
+            <div class="front side" onclick="frontFunction()">
                 <div class="content">
                     <br><br><br>
                     <br><br><br>
@@ -105,12 +105,29 @@
                                         <option value="WI">Wisconsin</option>
                                         <option value="WY">Wyoming</option>
                             </select>
-                            <button class="submitButton" type="submit"><a href="resultsPage.html">Check out the Results!</a></button>
+                            <button class="submitButton" type="submit">Check out the Results!</button>
                         </form>
                     </div>
                 </div>
         
         </div>
+
+        <script type="text/javascript">
+            let  container = document.querySelectorAll(".container");
+
+    function frontFunction() {
+        container.forEach((x) => x.addEventListener("click", function () {
+            this.classList.add("active");
+        }))
+    }
+
+    function backFunction() {
+        container.forEach((x) => x.addEventListener("click", function () {
+            this.classList.remove("active");
+        }))
+    }
+    
+</script>
 </body>
 
 </html>
