@@ -19,6 +19,24 @@
 </head>
 
 <body>
+    
+    <div class="modal" tabindex="-1" role="dialog" id="errorModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">Attention</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Baand name does not exist. Please retype band name.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
     
         <div class="container">
@@ -42,13 +60,10 @@
                         <br>
                         <br>
     
-                        <form action="resultsPage.html">
+                        <form action="resultsPage.html" id="search-form">
                             <label for="bandInput">Artist Name :</label>
                             <br>
                             <input type="text" name="band" placeholder="Type the Artist name" id="bandInput" autocomplete="off">
-                            <br>
-                            <label for="cityInput">City :</label>
-                            <input type="text" name="city" placeholder="Type the city name" id="cityInput" autocomplete="off">
                             <br>
                             <label for="stateInput">Select a state:</label>
                             <select class="form-control" name="state" id="stateInput">
@@ -105,12 +120,18 @@
                                         <option value="WI">Wisconsin</option>
                                         <option value="WY">Wyoming</option>
                             </select>
+                            <br>
+                            <label for="cityInput">City :</label>
+                            <input type="text" name="city" placeholder="Type the city name" id="cityInput" autocomplete="off">
+                            <br>
+
                             <button class="submitButton" type="submit">Check out the Results!</button>
                         </form>
                     </div>
                 </div>
         
         </div>
+        <script src="assets/javascript/validation.js"></script>
 </body>
 
 </html>

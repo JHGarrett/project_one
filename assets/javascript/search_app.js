@@ -16,18 +16,25 @@ console.log(city);
 console.log(state);
 
 var bandArray = [];
+function runError(searchError){
+    if(searchError){
 
+        alert("Sorry, there are no bands playing in your city.");
+        setTimeout(function(){
+            window.location.href="index.html"
+        }, 1000)
+    }
+}
 
 function printResults(eventResults){
 
     // Adding new search results
     console.log("printing results")
     for(var x = 0; x < eventResults.length; x++){
-        console.log(eventResults.length)
         var startDate = eventResults[x].start.date;
         var eventTitle = eventResults[x].displayName;
-        console.log(eventTitle)
-        var backgroundImageLink = "url(\"http://images.sk-static.com/images/media/profile_images/artists/"+eventResults[x].performance[0].artist.id+"/huge_avatar\")";
+        var artistID = eventResults[x].performance[0].artist.id;
+        var backgroundImageLink = "url(\"http://images.sk-static.com/images/media/profile_images/artists/"+artistID+"/huge_avatar\")";
         console.log(backgroundImageLink)
         var artistPerforming = eventResults[x].performance[0].displayName;
         if (eventResults[x].performance.length > 0){
@@ -37,7 +44,7 @@ function printResults(eventResults){
         console.log(artistPerforming);
         var outerBox = $("<div>").addClass("box a"+(x+1)).css("background-image", backgroundImageLink);
         var imageBox = $("<div>").addClass("image_a"+(x+1));
-        var textBox = $("<div>").addClass("text").prepend($("<a href=\""+eventResults[x].uri+"\"><h2>"+eventTitle+"</h2></a>")).append(($("<p> Artists: "+artistPerforming+"</p>")))
+        var textBox = $("<div>").addClass("text").prepend($("<a target=\"_blank\" href=\""+eventResults[x].uri+"\"><h2>"+eventTitle+"</h2></a>")).append(($("<p> Artists: "+artistPerforming+"</p>")))
         $(".artistAccordion").append(outerBox.append(imageBox.append(textBox)));
     }   
 }
@@ -54,34 +61,33 @@ $(document).ready(function(){
 
         //If user doesn't input artist, will search for all  for upcoming concerts at indicated locaiton. 
         //Searches the location query based on what city the user puts. Metro ID is retrieved with the city that matches the state the user specifies.
-        if((city !== "") && (state !== "")){
-            //Getting city and state values
-            var stateName = state;
-            var metroName = city;
-            console.log("xxxx")
-            //Searching in the location end point to obtain a metroID for the city in the specificed state
-            var metroID;
-            var queryLocationURL = prependLocationURL+metroName+"&apikey="+apiKey;
-            console.log(queryLocationURL)
+            if((city !== "") && (state !== "")){
+                //Getting city and state values
+                var stateName = state;
+                var metroName = city;
+                //Searching in the location end point to obtain a metroID for the city in the specificed state
+                var metroID;
+                var queryLocationURL = prependLocationURL+metroName+"&apikey="+apiKey;
+                console.log(queryLocationURL)
 
-            $.ajax({
-                url: queryLocationURL,
-                method: "GET"
+                $.ajax({
+                    url: queryLocationURL,
+                    method: "GET"
 
-            }).then(function(data){
-                //Getting location object
-                console.log("ooo")
-                console.log(data)
-                var results = data.resultsPage.results.location;
-                console.log(results)
+                }).then(function(data){
+                    //Getting location object
+                    console.log(data)
+                    var results = data.resultsPage.results.location;
+                    console.log(results)
 
-                if(results !== undefined){
-                    for (var i = 0; i < results.length; i++){
-                        if(results[i].metroArea.country.displayName === "US"){
-                            //If the state in the location query matches the state that the user inputted, we have found a match of that city for the specifed state. MetroID is assigned.
-                            if((results[i].metroArea.state.displayName === stateName)){
-                                metroID = results[i].metroArea.id;
-                                break;
+                    if(results !== undefined){
+                        for (var i = 0; i < results.length; i++){
+                            if(results[i].metroArea.country.displayName === "US"){
+                                //If the state in the location query matches the state that the user inputted, we have found a match of that city for the specifed state. MetroID is assigned.
+                                if((results[i].metroArea.state.displayName === stateName)){
+                                    metroID = results[i].metroArea.id;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -123,8 +129,8 @@ $(document).ready(function(){
                         //City is in the state but there are no bands in that city performing.
                         if((data === undefined) || (eventResults === undefined)){
                             searchError = true
-                            // console.log("No events found");
-                            alert("City is in the state but there are no bands performing in that city");
+                            runError(searchError)
+                            console.log("Response - user types in city correctly but the city is not in the state.")
                         }
 
                         //Results have been found from city search
@@ -146,8 +152,8 @@ $(document).ready(function(){
                     }else{
                         //User types in city correctly but city is not in the state
                         searchError = true
-                        // alert("Sorry no results found with given city.")
-                        console.log("Response - user types in city correctly but the city is not in the state.")
+                        runError(searchError)
+                        console.log("Error - mispelled city name")
                     }
 
                     //When user has misspelled a city.
@@ -157,47 +163,30 @@ $(document).ready(function(){
                     console.log("Error - mispelled city name")
                 }
 
+                })
+            
+            //When user searches by band only
+            }else if(band !== ""){
 
-            })
-        
-        //When user searches by band only
-        }else if(band !== ""){
-
-            var queryEventURL = prependEventURL+apiKey+"&artist_name="+band+"&per_page=5";
-            $.ajax({
-                url: queryEventURL,
-                method: "GET"
-            }).then(function(data){
-                //Getting event object
-                var eventResults = data.resultsPage.results.event;
-                console.log(eventResults)
-                //When user has misspelled name of the artist or the spelling does not match standard format
-                if((data === undefined) || (eventResults === undefined)){
-                    searchError = true
-                        // alert("No events found for given band" );
-                    console.log("no events found")
-                }
+                var queryEventURL = prependEventURL+apiKey+"&artist_name="+band+"&per_page=5";
+                $.ajax({
+                    url: queryEventURL,
+                    method: "GET"
+                }).then(function(data){
+                    //Getting event object
+                    var eventResults = data.resultsPage.results.event;
+                    console.log(eventResults)
+                    //When user has misspelled name of the artist or the spelling does not match standard format
                 //Query has found band performances.
-                else{
                     printResults(eventResults);
+                
+
+
+                    })
                 }
-
-
-            })
+            
         }
-        //When the all input fields are blank 
-        else{
-            searchError = true
-            console.log("Please check all fields typed correctly.")
-        }
-        
-    }
-    if(searchError){
-        alert("There's an error in your search.")
-        setTimeout(function(){
-            window.location.href="index.html"
-        }, 1000)
-    }
+    
 
-});
 
+    })
