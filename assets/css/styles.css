@@ -69,7 +69,8 @@ body {
   background-size: cover;
   box-shadow: 0 0 50 20 rgba(0, 0, 0, 0.87); }
 
-.container:hover {
+
+.container.active {
   transform: rotateY(-180deg); }
 
 
