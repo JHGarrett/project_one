@@ -23,7 +23,7 @@
     
         <div class="container">
             
-            <div class="front side">
+            <div class="front side" onclick="frontFunction()">
                 <div class="content">
                     <br><br><br>
                     <br><br><br>
@@ -111,6 +111,23 @@
                 </div>
         
         </div>
+
+        <script type="text/javascript">
+            let  container = document.querySelectorAll(".container");
+
+    function frontFunction() {
+        container.forEach((x) => x.addEventListener("click", function () {
+            this.classList.add("active");
+        }))
+    }
+
+    function backFunction() {
+        container.forEach((x) => x.addEventListener("click", function () {
+            this.classList.remove("active");
+        }))
+    }
+    
+</script>
 </body>
 
 </html>
