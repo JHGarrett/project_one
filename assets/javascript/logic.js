@@ -23,7 +23,7 @@ $(document).ready(function() {
         var keywords = band.replace(reg, "+");
         console.log(keywords);
 
-        keywords = keywords + "+Merch";
+        keywords = keywords;
 
         console.log(keywords)
 

@@ -16,18 +16,25 @@ console.log(city);
 console.log(state);
 
 var bandArray = [];
+function runError(searchError){
+    if(searchError){
 
+        alert("Sorry, there are no bands playing in your city.");
+        setTimeout(function(){
+            window.location.href="index.html"
+        }, 1000)
+    }
+}
 
 function printResults(eventResults){
 
     // Adding new search results
     console.log("printing results")
     for(var x = 0; x < eventResults.length; x++){
-        console.log(eventResults.length)
         var startDate = eventResults[x].start.date;
         var eventTitle = eventResults[x].displayName;
-        console.log(eventTitle)
-        var backgroundImageLink = "url(\"http://images.sk-static.com/images/media/profile_images/artists/"+eventResults[x].performance[0].artist.id+"/huge_avatar\")";
+        var artistID = eventResults[x].performance[0].artist.id;
+        var backgroundImageLink = "url(\"http://images.sk-static.com/images/media/profile_images/artists/"+artistID+"/huge_avatar\")";
         console.log(backgroundImageLink)
         var artistPerforming = eventResults[x].performance[0].displayName;
         if (eventResults[x].performance.length > 0){
@@ -37,7 +44,7 @@ function printResults(eventResults){
         console.log(artistPerforming);
         var outerBox = $("<div>").addClass("box a"+(x+1)).css("background-image", backgroundImageLink);
         var imageBox = $("<div>").addClass("image_a"+(x+1));
-        var textBox = $("<div>").addClass("text").prepend($("<a href=\""+eventResults[x].uri+"\"><h2>"+eventTitle+"</h2></a>")).append(($("<p> Artists: "+artistPerforming+"</p>")))
+        var textBox = $("<div>").addClass("text").prepend($("<a target=\"_blank\" href=\""+eventResults[x].uri+"\"><h2>"+eventTitle+"</h2></a>")).append(($("<p> Artists: "+artistPerforming+"</p>")))
         $(".artistAccordion").append(outerBox.append(imageBox.append(textBox)));
     }   
 }
@@ -60,7 +67,6 @@ function printResults(eventResults){
                 //Getting city and state values
                 var stateName = state;
                 var metroName = city;
-                console.log("xxxx")
                 //Searching in the location end point to obtain a metroID for the city in the specificed state
                 var metroID;
                 var queryLocationURL = prependLocationURL+metroName+"&apikey="+apiKey;
@@ -72,7 +78,6 @@ function printResults(eventResults){
 
                 }).then(function(data){
                     //Getting location object
-                    console.log("ooo")
                     console.log(data)
                     var results = data.resultsPage.results.location;
                     console.log(results)
@@ -118,15 +123,13 @@ function printResults(eventResults){
                             method: "GET"
                     
                             }).then(function(data){
-                            // globalEvent = data;
                             //Getting event object
                             var eventResults = data.resultsPage.results.event;
                             console.log(eventResults)
                             //City is in the state but there are no bands in that city performing.
                             if((data === undefined) || (eventResults === undefined)){
                                 searchError = true
-                                // console.log("No events found");
-                                alert("City is in the state but there are no bands performing in that city");
+                                runError(searchError)
                             }
 
                             //Results have been found from city search
@@ -148,14 +151,14 @@ function printResults(eventResults){
                         }else{
                             //User types in city correctly but city is not in the state
                             searchError = true
-                            // alert("Sorry no results found with given city.")
+                            runError(searchError)
                             console.log("Response - user types in city correctly but the city is not in the state.")
                         }
 
                         //When user has misspelled a city.
                     }else{
                         searchError = true
-                        // alert("No results found with given city found");
+                        runError(searchError)
                         console.log("Error - mispelled city name")
                     }
 
@@ -174,32 +177,16 @@ function printResults(eventResults){
                     var eventResults = data.resultsPage.results.event;
                     console.log(eventResults)
                     //When user has misspelled name of the artist or the spelling does not match standard format
-                if((data === undefined) || (eventResults === undefined)){
-                    searchError = true
-                        // alert("No events found for given band" );
-                    console.log("no events found")
-                }
                 //Query has found band performances.
-                else{
                     printResults(eventResults);
-                }
+                
 
 
                     })
                 }
-                //When the all input fields are blank 
-                else{
-                    searchError = true
-                    console.log("Please check all fields typed correctly.")
-                }
             
         }
-        if(searchError){
-            alert("There's an error in your search.")
-            setTimeout(function(){
-                window.location.href="index.html"
-            }, 1000)
-        }
+    
+
 
     })
-
