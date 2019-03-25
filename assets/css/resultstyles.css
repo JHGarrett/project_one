@@ -10,40 +10,6 @@ body {
     background: rgb(196, 192, 192);
 }
 
-/* =================================== */
-/* Loading Animation */
-/* =================================== */
-
-
-/* .loader {
-  position: fixed;
-  z-index: 99;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loader > img {
-  width: 600px;
-}
-
-.loader.hidden {
-  animation: fadeOut 6s;
-  animation-fill-mode: forwards;
-}
-
-@keyframes fadeOut {
-  100% {
-      opacity: 0;
-      visibility: hidden;
-  }
-} */
-
 
 
 /* =================================== */
@@ -53,6 +19,8 @@ h1{
   font-size: 100px
 }
 
+
+/* style for the sonkick accordion */
 .artistAccordion {
     max-width: 990px;
     background: rgba(0, 0, 0, 0.10);
@@ -112,6 +80,7 @@ p {
 h1 {
     font-size: 50px;
     width: 250px;
+    
     text-align: center;
     margin: 100px auto 20px auto;
     
@@ -148,6 +117,7 @@ h2 {
 /* eBay Acordion */
 /* =================================== */
 
+/* style for the ebay accordion */
 
 .ebayAccordion {
   max-width: 990px;
@@ -205,6 +175,7 @@ p {
 }
 h1 {
   width: 250px;
+  font-size: 60px;
   text-align: center;
   margin: 100px auto 20px auto;
 }

@@ -14,7 +14,7 @@ body {
   background-color: aqua;
   background: url(../images/concert5.jpg);
   font-family: Arial; }
-
+/* front page container */
 .container {
 
   min-width: 1000px;

@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    
+    <!-- This is the modal to let user know there is no such request found -->
     <div class="modal" tabindex="-1" role="dialog" id="errorModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -28,7 +28,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>Baand name does not exist. Please retype band name.</p>
+          <p>Band name does not exist. Please retype band name.</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -37,8 +37,11 @@
     </div>
   </div>
 
+  <!-- end modal -->
+
     
         <div class="container">
+          <!-- front side of the flip card -->
             
             <div class="front side" onclick="frontFunction()">
                 <div class="content">
@@ -48,7 +51,7 @@
 
                 </div>
             </div>
-        
+        <!-- back side of the flip card -->
                 <div class="back side">
                     <div class="content">
                         <h1>About the app</h1>
@@ -58,7 +61,7 @@
                         <p>LiveMerch is an app that allow you to see what Artist or events are happening in a given city. Then allows you to purchase merchandise directly from eBay for the Event or concert.</p>
                         <br>
                         <br>
-    
+    <!-- form to allow users to input search info -->
                         <form action="resultsPage.html" id="search-form">
                             <label for="bandInput">Artist Name :</label>
                             <br>
@@ -130,6 +133,8 @@
                 </div>
         
         </div>
+
+        <!-- JS to allow the front card to flip on click -->
 
         <script type="text/javascript">
             let  container = document.querySelectorAll(".container");
