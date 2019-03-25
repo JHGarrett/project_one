@@ -8,6 +8,8 @@ body {
     align-items: center;
     background: gray;
 }
+
+/* styling for the container */
 .container {
     width: 900px;
     position: relative;
@@ -54,6 +56,8 @@ body {
     margin: 20px auto;
     margin-bottom: -5px
 }
+
+/* font awesome media icon style */
 .social {
     width: 100px;
     margin: 0 auto;
@@ -125,7 +129,7 @@ h2 {
     background-position: center;
     background-size: cover;
 }
-
+/* style for  when the card is fliped */
 .back {
     position: absolute;
     top: 0;
@@ -144,6 +148,7 @@ h2 {
 
 
 }
+/* style for the front not flipped */
 .front {
     width: 300px;
     height: 275px;
