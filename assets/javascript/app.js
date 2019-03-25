@@ -40,7 +40,7 @@ $(document).ready(function() {
             console.log(artistPerforming);
             var outerBox = $("<div>").addClass("box a"+(x+1)).css("background-image", backgroundImageLink);
             var imageBox = $("<div>").addClass("image_a"+(x+1));
-            var textBox = $("<div>").addClass("text").prepend($("<a href=\""+eventResults[x].uri+"\"><h2>"+eventTitle+"</h2></a>")).append(($("<p> Artists: "+artistPerforming+"</p>")))
+            var textBox = $("<div>").addClass("text").prepend($("<a href=\""+eventResults[x].uri+"\" target='_blank'><h2>"+eventTitle+"</h2></a>")).append(($("<p> Artists: "+artistPerforming+"</p>")))
             $(".artistAccordion").append(outerBox.append(imageBox.append(textBox)));
         }   
     }
